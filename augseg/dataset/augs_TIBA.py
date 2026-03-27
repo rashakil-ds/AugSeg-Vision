@@ -232,7 +232,8 @@ def img_aug_hue(img, scale=[0, 0.5]):
     np_h = np.array(h, dtype=np.uint8)
     # uint8 addition take cares of rotation across boundaries
     with np.errstate(over="ignore"):
-        np_h += np.uint8(hue_factor * 255)
+        np_h = (np_h.astype(np.int16) + int(hue_factor * 255)) % 256
+        np_h = np_h.astype(np.uint8)
     h = Image.fromarray(np_h, "L")
     img = Image.merge("HSV", (h, s, v)).convert(input_mode)
     return img

@@ -1,5 +1,5 @@
 import logging
-
+import os
 from PIL import Image
 from torch.utils.data import Dataset
 
@@ -20,6 +20,7 @@ class BaseDataset(Dataset):
                 ]
                 for line in open(d_list, "r")
             ]
+    
         elif "pascal" in d_list or "VOC" in d_list:
             self.list_sample = [
                 [
@@ -43,6 +44,9 @@ class BaseDataset(Dataset):
     def img_loader(self, path, mode):
         with open(path, "rb") as f:
             img = Image.open(f)
+            if mode == "L":
+                # keep label indices as-is for segmentation masks
+                return img.copy()
             return img.convert(mode)
 
     def __len__(self):

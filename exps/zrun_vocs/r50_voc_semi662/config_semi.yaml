@@ -21,7 +21,7 @@ dataset: # Required.
     data_root: ./data/VOC2012
     data_list: ./data/splitsall/pascal/val.txt
     batch_size: 1
-  n_sup: 662
+  n_sup: 93
   workers: 4
   mean: [0.485, 0.456, 0.406]
   std: [0.229, 0.224, 0.225]

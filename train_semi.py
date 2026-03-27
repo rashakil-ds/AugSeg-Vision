@@ -296,9 +296,9 @@ def train(
         lr_scheduler.step() # lr is updated at the iteration level
 
         # obtain labeled and unlabeled data
-        _, image_l, label_l = loader_l_iter.next()
+        _, image_l, label_l = next(loader_l_iter)
         image_l, label_l = image_l.cuda(), label_l.cuda()
-        _, image_u_weak, image_u_aug, _ = loader_u_iter.next()
+        _, image_u_weak, image_u_aug, _ = next(loader_u_iter)
         image_u_weak, image_u_aug = image_u_weak.cuda(), image_u_aug.cuda()
         
         # start the training
@@ -580,12 +580,24 @@ def validate_citys(
             logger.info(" [Test] -  class [{}] IoU {:.2f}".format(i, iou * 100))
     return mIoU
 
-
+'''
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Semi-Supervised Semantic Segmentation")
     parser.add_argument("--config", type=str, default="config.yaml")
     parser.add_argument("--local_rank", type=int, default=0)
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--port", default=None, type=int)
+    args = parser.parse_args()
+    main(args)
+'''
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Semi-Supervised Semantic Segmentation")
+    parser.add_argument("--config", type=str, default="config.yaml")
+    parser.add_argument("--local_rank", type=int, default=0)
+    parser.add_argument("--local-rank", dest="local_rank", type=int, default=0)
+    parser.add_argument("--seed", type=int, default=0)
+    parser.add_argument("--port", default=None, type=int)
+    parser.add_argument("--resume", type=str, default=None)
     args = parser.parse_args()
     main(args)

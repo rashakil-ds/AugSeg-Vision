@@ -8,7 +8,7 @@ torchrun \
     --node_rank=0 \
     --master_port=${tport} \
     $ROOT/train_semi.py \
-    --config=$ROOT/exps/zrun_citys/citys_semi744/config_semi.yaml --seed 2 --port ${tport}
+    --config=$ROOT/exps/zrun_citys/citys_semi744_shape/config_semi.yaml --seed 2 --port ${tport}
 
 # --- --- --- 
     # --config=$ROOT/exps/zrun_citys/citys_semi186/config_semi.yaml --seed 2 --port ${tport}

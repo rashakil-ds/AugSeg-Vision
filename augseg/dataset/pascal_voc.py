@@ -15,10 +15,9 @@ from .base import BaseDataset
 
 # https://pytorch.org/docs/stable/notes/randomness.html
 def seed_worker(worker_id):
-    cur_seed = np.random.get_state()[1][0]
-    cur_seed += worker_id
+    cur_seed = int(np.random.get_state()[1][0]) + int(worker_id)
     np.random.seed(cur_seed)
-    random.seed(cur_seed)
+    random.seed(int(cur_seed))
 
 
 class voc_dset(BaseDataset):
@@ -56,9 +55,18 @@ class voc_dset(BaseDataset):
         return img_trsform.ToTensorAndNormalize(mean, std)
 
     def __getitem__(self, index):
+        
         # load image and its label
         image_path = os.path.join(self.data_root, self.list_sample_new[index][0])
-        label_path = os.path.join(self.data_root, self.list_sample_new[index][1])
+        label_rel = self.list_sample_new[index][1]
+        label_path = os.path.join(self.data_root, label_rel)
+
+        if not os.path.exists(label_path) and "SegmentationClassAug/" in label_rel:
+            fallback_rel = label_rel.replace("SegmentationClassAug/", "SegmentationClass/")
+            fallback_path = os.path.join(self.data_root, fallback_rel)
+            if os.path.exists(fallback_path):
+                label_path = fallback_path
+
         image = self.img_loader(image_path, "RGB")
         label = self.img_loader(label_path, "L")
 

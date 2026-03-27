@@ -19,8 +19,8 @@ from .base import BaseDataset
 def seed_worker(worker_id):
     cur_seed = np.random.get_state()[1][0]
     cur_seed += worker_id
-    np.random.seed(cur_seed)
-    random.seed(cur_seed)
+    np.random.seed(int(cur_seed))
+    random.seed(int(cur_seed))
 
 
 class city_dset(BaseDataset):

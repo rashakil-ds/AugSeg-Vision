@@ -27,7 +27,6 @@ model_urls = {
     "resnet152": "/path/to/resnet152.pth",
 }
 
-
 def get_syncbn():
     # return nn.BatchNorm2d
     return nn.SyncBatchNorm

@@ -59,6 +59,8 @@ trainer: # Required.
 # 3. output files, and loss
 # # # # # # # # # # # # # # 
 saver:
+  #auto_resume: True
+  auto_resume: False
   snapshot_dir: checkpoints
   pretrain: ''
   use_tb: False
